@@ -13,29 +13,21 @@
           "8080": { "label": "Java/Go", "onAutoForward": "notify" }
         }
       },
-      "extensions": {
-        "ms-vsliveshare.vsliveshare", 
-        
-        // --- TypeScript/JavaScript 強化 ---
+      "extensions": [
+        "ms-vsliveshare.vsliveshare",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "yoavbls.pretty-ts-errors", 
-
-        "Shopify.ruby-lsp", 
-        
+        "yoavbls.pretty-ts-errors",
+        "Shopify.ruby-lsp",
         "ms-python.python",
         "golang.go",
-        
-        // --- 共通 ---
         "rangav.vscode-thunder-client",
         "eamodio.gitlens",
         "GitHub.copilot"
-      }
+      ]
     }
   },
 
-  // TypeScriptの実行環境(ts-node)とコンパイラをグローバルに入れておく
-  // これで、ファイル作成後すぐに `ts-node index.ts` で動かせます
   "postCreateCommand": "npm install -g yarn pnpm typescript ts-node && pip install --upgrade pip && gem install bundler",
 
   "remoteUser": "codespace"
