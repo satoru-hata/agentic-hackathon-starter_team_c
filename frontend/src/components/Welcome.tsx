@@ -7,10 +7,10 @@ interface ApiResponse {
 }
 
 const Welcome: React.FC = () => {
+  const navigate = useNavigate();
   const [apiData, setApiData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWelcomeData = async () => {
@@ -88,6 +88,14 @@ const Welcome: React.FC = () => {
               className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition duration-200"
             >
               新規登録
+            </button>
+          </div>
+          <div>
+            <button 
+              onClick={() => navigate('/status')}
+              className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+            >
+              本日の勤務状況を見る
             </button>
           </div>
         </div>
