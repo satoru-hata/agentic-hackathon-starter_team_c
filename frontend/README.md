@@ -34,6 +34,14 @@ npm start
 
 アプリは http://localhost:3001 で起動します（`PORT=3001` が設定されています）。
 
+## Setup
+
+First, install the dependencies:
+
+```bash
+npm install
+```
+
 ## Available Scripts
 
 ### `npm start`
