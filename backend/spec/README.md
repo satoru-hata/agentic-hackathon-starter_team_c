@@ -47,10 +47,15 @@ RAILS_ENV=test bundle exec rails db:migrate
 ## Directory Structure
 
 - `spec/requests/` - Request specs (API endpoint tests)
-- `spec/models/` - Model specs
-- `spec/controllers/` - Controller specs (if needed)
 - `spec/support/` - Helper modules and shared examples
+
+Create additional directories as needed for your project:
+- `spec/models/` - Model specs
+- `spec/controllers/` - Controller specs
 - `spec/factories/` - FactoryBot factories for test data
+- `spec/helpers/` - Helper specs
+- `spec/mailers/` - Mailer specs
+- `spec/jobs/` - Job specs
 
 ## Writing Tests
 
