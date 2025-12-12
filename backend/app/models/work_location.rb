@@ -11,6 +11,6 @@ class WorkLocation < ApplicationRecord
   validates :date, presence: true
   validates :user_profile_id, uniqueness: { scope: :date, message: "can only have one work location per day" }
 
-  scope :today, -> { where(date: Date.today) }
+  scope :today, -> { where(date: Time.zone.today) }
   scope :for_date, ->(date) { where(date: date) }
 end
