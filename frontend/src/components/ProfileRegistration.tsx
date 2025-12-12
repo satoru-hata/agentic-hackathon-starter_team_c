@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface ProfileFormData {
   name: string;
@@ -12,6 +12,47 @@ const ProfileRegistration: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [hasExistingProfile, setHasExistingProfile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Check if user already has a profile on component mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/profile', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.ok) {
+          const profileData = await response.json();
+          setFormData({
+            name: profileData.name || '',
+            department: profileData.department || ''
+          });
+          setHasExistingProfile(true);
+        }
+        // If response is not ok (e.g., 404), profile doesn't exist yet - this is expected
+      } catch (error) {
+        // Network errors or other issues - profile fetch failed
+        // Continue with empty form, allowing user to create a new profile
+        console.error('Error fetching profile:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,29 +75,50 @@ const ProfileRegistration: React.FC = () => {
     setMessage(null);
 
     try {
-      // Submit to dummy_path as specified
-      // Since dummy_path doesn't exist, we simulate the submission
-      await fetch('dummy_path', {
-        method: 'POST',
+      // Get authentication token from localStorage
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        setMessage({ 
+          type: 'error', 
+          text: 'ログインが必要です。' 
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Submit to the correct API endpoint
+      const method = hasExistingProfile ? 'PUT' : 'POST';
+      const response = await fetch('http://localhost:3000/api/v1/profile', {
+        method: method,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData)
-      }).catch(() => {
-        // Expected to fail for dummy_path - this is intentional
       });
 
-      // Show success message for demo purposes
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.errors || 'プロフィールの登録に失敗しました。');
+      }
+
+      // Show success message
+      const successText = hasExistingProfile ? '情報を更新しました。' : '情報を登録しました。';
       setMessage({ 
         type: 'success', 
-        text: '情報を登録しました。（ダミーパス送信完了）' 
+        text: successText
       });
       
+      // Update state to reflect that profile now exists
+      if (!hasExistingProfile) {
+        setHasExistingProfile(true);
+      }
+      
     } catch (error) {
-      // Unexpected errors
       setMessage({ 
         type: 'error', 
-        text: 'エラーが発生しました。' 
+        text: error instanceof Error ? error.message : 'エラーが発生しました。' 
       });
     } finally {
       setIsSubmitting(false);
@@ -74,7 +136,12 @@ const ProfileRegistration: React.FC = () => {
           以下の情報を入力してください。既に登録済みの場合は、情報が更新されます。
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        {isLoading ? (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name Field */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -130,9 +197,10 @@ const ProfileRegistration: React.FC = () => {
                 : 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
             }`}
           >
-            {isSubmitting ? '送信中...' : '登録する'}
+            {isSubmitting ? '送信中...' : (hasExistingProfile ? '更新する' : '登録する')}
           </button>
         </form>
+        )}
       </div>
     </div>
   );
