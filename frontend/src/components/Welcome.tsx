@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface ApiResponse {
   message: string;
@@ -9,6 +10,7 @@ const Welcome: React.FC = () => {
   const [apiData, setApiData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWelcomeData = async () => {
@@ -68,9 +70,15 @@ const Welcome: React.FC = () => {
         <div className="mt-6 text-center">
           <button 
             onClick={() => window.location.reload()}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 mr-2"
           >
             Refresh
+          </button>
+          <button 
+            onClick={() => navigate('/register')}
+            className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+          >
+            新規登録
           </button>
         </div>
       </div>
