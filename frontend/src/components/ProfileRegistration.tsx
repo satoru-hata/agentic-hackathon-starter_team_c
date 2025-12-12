@@ -34,29 +34,49 @@ const ProfileRegistration: React.FC = () => {
     setMessage(null);
 
     try {
-      // Submit to dummy_path as specified
-      // Since dummy_path doesn't exist, we simulate the submission
-      await fetch('dummy_path', {
+      // Get authentication token from localStorage
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        setMessage({ 
+          type: 'error', 
+          text: 'ログインが必要です。' 
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Submit to the correct API endpoint
+      const response = await fetch('http://localhost:3000/api/v1/profile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData)
-      }).catch(() => {
-        // Expected to fail for dummy_path - this is intentional
       });
 
-      // Show success message for demo purposes
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.errors || 'プロフィールの登録に失敗しました。');
+      }
+
+      // Show success message
       setMessage({ 
         type: 'success', 
-        text: '情報を登録しました。（ダミーパス送信完了）' 
+        text: '情報を登録しました。' 
+      });
+      
+      // Reset form after successful submission
+      setFormData({
+        name: '',
+        department: ''
       });
       
     } catch (error) {
-      // Unexpected errors
       setMessage({ 
         type: 'error', 
-        text: 'エラーが発生しました。' 
+        text: error instanceof Error ? error.message : 'エラーが発生しました。' 
       });
     } finally {
       setIsSubmitting(false);
