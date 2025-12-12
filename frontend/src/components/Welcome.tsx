@@ -67,19 +67,29 @@ const Welcome: React.FC = () => {
           </div>
         )}
 
-        <div className="mt-6 text-center">
-          <button 
-            onClick={() => window.location.reload()}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 mr-2"
-          >
-            Refresh
-          </button>
-          <button 
-            onClick={() => navigate('/register')}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded transition duration-200"
-          >
-            新規登録
-          </button>
+        <div className="mt-6 text-center space-y-3">
+          <div>
+            <button 
+              onClick={() => window.location.reload()}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 mr-2"
+            >
+              Refresh
+            </button>
+          </div>
+          <div className="space-x-2">
+            <button 
+              onClick={() => navigate('/login')}
+              className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+            >
+              ログイン
+            </button>
+            <button 
+              onClick={() => navigate('/register')}
+              className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+            >
+              新規登録
+            </button>
+          </div>
         </div>
       </div>
     </div>
