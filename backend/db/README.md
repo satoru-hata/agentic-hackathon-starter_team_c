@@ -21,7 +21,15 @@ The following migrations have been created based on spec.md:
 
 ## Running Migrations
 
-To run the migrations, execute:
+### Option 1: Using SQL Script (Recommended if bundle install has issues)
+
+```bash
+# Tables have already been created using create_tables.sql
+# To recreate them, run:
+docker compose exec -T db psql -U user -d mydb < backend/db/create_tables.sql
+```
+
+### Option 2: Using Rails Migrations
 
 ```bash
 # Using Docker Compose
@@ -32,6 +40,17 @@ cd backend
 bundle install
 rails db:migrate
 ```
+
+## Current Status
+
+✅ **Database tables have been created and are ready to use!**
+
+The following tables have been created in the PostgreSQL database:
+- `users` - ✅ Created with all indexes
+- `employee_profiles` - ✅ Created with all indexes and foreign keys
+- `work_locations` - ✅ Created with all indexes and foreign keys
+- `schema_migrations` - ✅ Created with migration versions
+- `ar_internal_metadata` - ✅ Created for Rails metadata
 
 ## Database Schema
 
