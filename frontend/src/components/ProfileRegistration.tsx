@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -8,7 +8,7 @@ interface ProfileFormData {
 }
 
 const ProfileRegistration: React.FC = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<ProfileFormData>({
     name: '',
@@ -16,13 +16,6 @@ const ProfileRegistration: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -46,26 +39,28 @@ const ProfileRegistration: React.FC = () => {
 
     try {
       // Submit to dummy_path as specified
+      // Since dummy_path doesn't exist, we simulate the submission
       await fetch('dummy_path', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
+      }).catch(() => {
+        // Expected to fail for dummy_path - this is intentional
       });
 
-      // Since it's a dummy path, we'll simulate success
-      // In real implementation, check response.ok
-      setMessage({ 
-        type: 'success', 
-        text: '情報を登録しました。' 
-      });
-      
-    } catch (error) {
-      // For dummy_path, we expect this to fail, but show as success for demonstration
+      // Show success message for demo purposes
       setMessage({ 
         type: 'success', 
         text: '情報を登録しました。（ダミーパス送信完了）' 
+      });
+      
+    } catch (error) {
+      // Unexpected errors
+      setMessage({ 
+        type: 'error', 
+        text: 'エラーが発生しました。' 
       });
     } finally {
       setIsSubmitting(false);
@@ -76,10 +71,6 @@ const ProfileRegistration: React.FC = () => {
     logout();
     navigate('/login');
   };
-
-  if (!isAuthenticated) {
-    return null; // Will redirect in useEffect
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
