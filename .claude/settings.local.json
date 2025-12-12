@@ -5,7 +5,8 @@
       "Bash(gh repo view:*)",
       "Bash(npx tailwindcss init:*)",
       "Bash(ls:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git rebase:*)"
     ]
   }
 }
