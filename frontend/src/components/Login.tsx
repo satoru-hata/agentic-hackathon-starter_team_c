@@ -15,7 +15,7 @@ const Login: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch('dummy_path', {
+      const response = await fetch('http://localhost:3000/api/v1/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
