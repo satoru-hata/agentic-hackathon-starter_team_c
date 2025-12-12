@@ -1,0 +1,17 @@
+# FactoryBot Factories
+#
+# Define your factories here for creating test data
+# Example:
+#
+# FactoryBot.define do
+#   factory :user do
+#     name { Faker::Name.name }
+#     email { Faker::Internet.email }
+#     age { Faker::Number.between(from: 18, to: 80) }
+#   end
+# end
+#
+# Usage in specs:
+#   user = create(:user)               # Persisted to database
+#   user = build(:user)                # Not persisted
+#   user = build_stubbed(:user)        # Stubbed, faster
