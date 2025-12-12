@@ -36,6 +36,8 @@
 # Ignore database dumps
 /db/*.sql
 /db/*.dump
+# But allow migration SQL scripts
+!/db/create_tables.sql
 
 # Ignore development database
 /db/development.sqlite3
