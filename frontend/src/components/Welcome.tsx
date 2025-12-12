@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 
 interface ApiResponse {
   message: string;
@@ -8,8 +6,6 @@ interface ApiResponse {
 }
 
 const Welcome: React.FC = () => {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
   const [apiData, setApiData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -72,15 +68,9 @@ const Welcome: React.FC = () => {
         <div className="mt-6 text-center">
           <button 
             onClick={() => window.location.reload()}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 mr-2"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200"
           >
             Refresh
-          </button>
-          <button 
-            onClick={() => navigate(isAuthenticated ? '/profile' : '/login')}
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition duration-200"
-          >
-            {isAuthenticated ? 'プロフィール登録' : 'ログイン'}
           </button>
         </div>
       </div>

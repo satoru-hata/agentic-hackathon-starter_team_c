@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 
 interface ProfileFormData {
   name: string;
@@ -8,8 +6,6 @@ interface ProfileFormData {
 }
 
 const ProfileRegistration: React.FC = () => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
   const [formData, setFormData] = useState<ProfileFormData>({
     name: '',
     department: ''
@@ -67,25 +63,12 @@ const ProfileRegistration: React.FC = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">
-            ユーザー情報登録
-          </h1>
-          <button
-            onClick={handleLogout}
-            className="text-sm text-gray-600 hover:text-gray-800 underline"
-          >
-            ログアウト
-          </button>
-        </div>
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">
+          ユーザー情報登録
+        </h1>
 
         <p className="text-gray-600 mb-6">
           以下の情報を入力してください。既に登録済みの場合は、情報が更新されます。
@@ -150,15 +133,6 @@ const ProfileRegistration: React.FC = () => {
             {isSubmitting ? '送信中...' : '登録する'}
           </button>
         </form>
-
-        <div className="mt-6 text-center">
-          <button
-            onClick={() => navigate('/')}
-            className="text-sm text-purple-600 hover:text-purple-800 underline"
-          >
-            ホームに戻る
-          </button>
-        </div>
       </div>
     </div>
   );
