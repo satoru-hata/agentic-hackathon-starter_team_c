@@ -68,18 +68,36 @@ const Welcome: React.FC = () => {
         )}
 
         <div className="mt-6 text-center space-y-3">
-          <button 
-            onClick={() => navigate('/status')}
-            className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-3 px-4 rounded transition duration-200"
-          >
-            本日の勤務状況を見る
-          </button>
-          <button 
-            onClick={() => window.location.reload()}
-            className="block w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200"
-          >
-            Refresh
-          </button>
+          <div>
+            <button 
+              onClick={() => window.location.reload()}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 mr-2"
+            >
+              Refresh
+            </button>
+          </div>
+          <div className="space-x-2">
+            <button 
+              onClick={() => navigate('/login')}
+              className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+            >
+              ログイン
+            </button>
+            <button 
+              onClick={() => navigate('/register')}
+              className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+            >
+              新規登録
+            </button>
+          </div>
+          <div>
+            <button 
+              onClick={() => navigate('/status')}
+              className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+            >
+              本日の勤務状況を見る
+            </button>
+          </div>
         </div>
       </div>
     </div>
