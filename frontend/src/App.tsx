@@ -1,8 +1,8 @@
 import React from 'react';
-import Welcome from './components/Welcome';
+import StatusList from './components/StatusList';
 
 function App() {
-  return <Welcome />;
+  return <StatusList />;
 }
 
 export default App;
