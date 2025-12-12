@@ -3,6 +3,9 @@
 echo "Building frontend dependencies..."
 
 # Run npm install using docker compose run --rm
-docker compose run --rm frontend npm install
-
-echo "Frontend dependencies installed successfully!"
+if docker compose run --rm frontend npm install; then
+    echo "Frontend dependencies installed successfully!"
+else
+    echo "Error: Failed to install frontend dependencies"
+    exit 1
+fi
