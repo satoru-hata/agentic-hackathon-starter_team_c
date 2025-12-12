@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_ENDPOINTS } from '../config/api';
 
 interface ApiResponse {
   message: string;
@@ -15,7 +16,7 @@ const Welcome: React.FC = () => {
   useEffect(() => {
     const fetchWelcomeData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/v1/welcome');
+        const response = await fetch(API_ENDPOINTS.welcome);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
