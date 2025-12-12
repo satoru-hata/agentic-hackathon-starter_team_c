@@ -6,7 +6,6 @@ RSpec.describe "Api::V1::Welcome", type: :request do
       get "/api/v1/welcome"
       
       expect(response).to have_http_status(:success)
-      json_response = JSON.parse(response.body)
       expect(json_response["message"]).to eq("Welcome to the API!")
       expect(json_response).to have_key("timestamp")
     end
