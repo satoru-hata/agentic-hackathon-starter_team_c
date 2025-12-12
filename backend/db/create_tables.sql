@@ -42,6 +42,3 @@ CREATE TABLE IF NOT EXISTS work_locations (
 CREATE INDEX IF NOT EXISTS index_work_locations_on_employee_profile_id ON work_locations(employee_profile_id);
 CREATE INDEX IF NOT EXISTS index_work_locations_on_date ON work_locations(date);
 CREATE UNIQUE INDEX IF NOT EXISTS index_work_locations_on_employee_profile_id_and_date ON work_locations(employee_profile_id, date);
-
--- Display created tables
-\dt
