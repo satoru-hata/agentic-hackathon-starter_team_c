@@ -9,6 +9,10 @@ Rails API for managing employee work location tracking system.
 - Work location tracking (office/remote/out_of_office)
 - Daily work location status for all employees
 
+## Requirements
+
+* Ruby version: 3.2.3
+
 ## Setup
 
 ### Prerequisites
@@ -99,6 +103,39 @@ spec/
     └── work_locations_spec.rb
 ```
 
+## Code Quality
+
+This project uses RuboCop for code linting and style enforcement.
+
+### Running RuboCop
+
+To check your code for style issues:
+
+```bash
+bundle exec rubocop
+```
+
+To automatically fix correctable offenses:
+
+```bash
+bundle exec rubocop -a
+```
+
+To automatically fix all offenses (including unsafe corrections):
+
+```bash
+bundle exec rubocop -A
+```
+
+### RuboCop Configuration
+
+The RuboCop configuration is defined in `.rubocop.yml` and includes:
+
+- RuboCop Rails plugin for Rails-specific cops
+- RuboCop Performance plugin for performance-related suggestions
+- Custom rules tailored for this Rails API project
+- Exclusions for generated files and third-party code
+
 ## Development
 
 ### Database Schema
@@ -120,4 +157,5 @@ spec/
 - **Database**: PostgreSQL
 - **Authentication**: JWT tokens with bcrypt
 - **Testing**: RSpec with FactoryBot
+- **Code Quality**: RuboCop with Rails and Performance plugins
 - **Deployment**: Docker
