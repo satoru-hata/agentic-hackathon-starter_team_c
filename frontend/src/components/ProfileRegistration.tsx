@@ -41,8 +41,11 @@ const ProfileRegistration: React.FC = () => {
           });
           setHasExistingProfile(true);
         }
+        // If response is not ok (e.g., 404), profile doesn't exist yet - this is expected
       } catch (error) {
-        // Profile doesn't exist yet, which is fine
+        // Network errors or other issues - profile fetch failed
+        // Continue with empty form, allowing user to create a new profile
+        console.error('Error fetching profile:', error);
       } finally {
         setIsLoading(false);
       }
