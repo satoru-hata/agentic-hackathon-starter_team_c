@@ -12,6 +12,9 @@ Rails.application.routes.draw do
       # Profile routes
       resource :profile, only: %i[show create update]
 
+      # Member routes
+      get "members", to: "members#index"
+
       # Work location routes
       get "work_locations/today", to: "work_locations#today"
       get "work_locations/history", to: "work_locations#history"
