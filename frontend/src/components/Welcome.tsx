@@ -11,8 +11,13 @@ const Welcome: React.FC = () => {
   const [apiData, setApiData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+
     const fetchWelcomeData = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/v1/welcome');
@@ -30,6 +35,11 @@ const Welcome: React.FC = () => {
 
     fetchWelcomeData();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
@@ -76,20 +86,31 @@ const Welcome: React.FC = () => {
               Refresh
             </button>
           </div>
-          <div className="space-x-2">
-            <button 
-              onClick={() => navigate('/login')}
-              className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded transition duration-200"
-            >
-              ログイン
-            </button>
-            <button 
-              onClick={() => navigate('/register')}
-              className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition duration-200"
-            >
-              新規登録
-            </button>
-          </div>
+          {isLoggedIn ? (
+            <div>
+              <button 
+                onClick={handleLogout}
+                className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+              >
+                ログアウト
+              </button>
+            </div>
+          ) : (
+              <div className="space-x-2">
+                <button 
+                  onClick={() => navigate('/login')}
+                  className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+                >
+                  ログイン
+                </button>
+                <button 
+                  onClick={() => navigate('/register')}
+                  className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+                >
+                  新規登録
+                </button>
+              </div>
+          )}
           <div>
             <button 
               onClick={() => navigate('/status')}
