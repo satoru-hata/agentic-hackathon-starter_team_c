@@ -11,7 +11,7 @@ Rails API for managing employee work location tracking system.
 
 ## Requirements
 
-* Ruby version: 3.0.6
+* Ruby version: 3.2.3
 
 ## Setup
 
@@ -107,32 +107,24 @@ spec/
 
 This project uses RuboCop for code linting and style enforcement.
 
-### Installing RuboCop
-
-RuboCop is not included in the Gemfile. Install it separately:
-
-```bash
-gem install rubocop rubocop-rails rubocop-performance
-```
-
 ### Running RuboCop
 
 To check your code for style issues:
 
 ```bash
-rubocop
+bundle exec rubocop
 ```
 
 To automatically fix correctable offenses:
 
 ```bash
-rubocop -a
+bundle exec rubocop -a
 ```
 
 To automatically fix all offenses (including unsafe corrections):
 
 ```bash
-rubocop -A
+bundle exec rubocop -A
 ```
 
 ### RuboCop Configuration
