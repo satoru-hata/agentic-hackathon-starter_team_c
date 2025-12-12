@@ -1,0 +1,68 @@
+# RuboCop configuration for Rails API project
+# Based on RuboCop defaults with Rails-specific settings
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'config/environments/**/*'
+    - 'config/initializers/**/*'
+
+# Use plugins instead of require
+plugins:
+  - rubocop-rails
+  - rubocop-performance
+
+# Style Guidelines
+Style/Documentation:
+  Enabled: false  # Not required for API endpoints
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Metrics
+Metrics/MethodLength:
+  Max: 15
+  Exclude:
+    - 'config/**/*'
+
+Metrics/AbcSize:
+  Max: 20
+  Exclude:
+    - 'config/**/*'
+
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - 'config/**/*'
+    - 'spec/**/*'
+    - 'test/**/*'
+
+# Layout
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - 'config/**/*'
+
+# Rails specific
+Rails/ApplicationController:
+  Enabled: true
+
+Rails/ApplicationRecord:
+  Enabled: true
+
+Rails/I18nLocaleTexts:
+  Enabled: false  # API-only app doesn't necessarily need i18n
+
+# Performance
+Performance/StringReplacement:
+  Enabled: true

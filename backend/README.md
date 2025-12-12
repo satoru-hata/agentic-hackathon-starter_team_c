@@ -9,6 +9,10 @@ Rails API for managing employee work location tracking system.
 - Work location tracking (office/remote/out_of_office)
 - Daily work location status for all employees
 
+## Requirements
+
+* Ruby version: 3.0.6
+
 ## Setup
 
 ### Prerequisites
@@ -37,6 +41,39 @@ Rails API for managing employee work location tracking system.
    rails db:setup
    rails db:migrate
    ```
+
+## Development Commands
+
+### Docker Commands (Recommended)
+
+```bash
+# Start all services
+docker compose up -d
+
+# Stop all services  
+docker compose down
+
+# View logs
+docker compose logs -f backend
+
+# Install/update gems
+docker compose exec backend bundle install
+
+# Database operations
+docker compose exec backend rails db:create
+docker compose exec backend rails db:migrate
+docker compose exec backend rails db:seed
+
+# Run Rails console
+docker compose exec backend rails console
+
+# Run tests
+docker compose exec backend rspec
+
+# Code quality checks
+docker compose exec backend bundle exec rubocop
+docker compose exec backend bundle exec rubocop -A  # Auto-fix issues
+```
 
 ## API Endpoints
 
@@ -99,6 +136,51 @@ spec/
     └── work_locations_spec.rb
 ```
 
+## Code Quality
+
+This project uses RuboCop for code linting and style enforcement.
+
+### Running RuboCop
+
+#### Using Docker (Recommended)
+
+To check your code for style issues:
+
+```bash
+docker compose exec backend bundle exec rubocop
+```
+
+To automatically fix correctable offenses:
+
+```bash
+docker compose exec backend bundle exec rubocop -a
+```
+
+To automatically fix all offenses (including unsafe corrections):
+
+```bash
+docker compose exec backend bundle exec rubocop -A
+```
+
+#### Local Setup
+
+If running locally without Docker:
+
+```bash
+bundle exec rubocop        # Check for issues
+bundle exec rubocop -a     # Auto-fix correctable issues
+bundle exec rubocop -A     # Auto-fix all issues (including unsafe)
+```
+
+### RuboCop Configuration
+
+The RuboCop configuration is defined in `.rubocop.yml` and includes:
+
+- RuboCop Rails plugin for Rails-specific cops
+- RuboCop Performance plugin for performance-related suggestions
+- Custom rules tailored for this Rails API project
+- Exclusions for generated files and third-party code
+
 ## Development
 
 ### Database Schema
@@ -120,4 +202,5 @@ spec/
 - **Database**: PostgreSQL
 - **Authentication**: JWT tokens with bcrypt
 - **Testing**: RSpec with FactoryBot
+- **Code Quality**: RuboCop with Rails and Performance plugins
 - **Deployment**: Docker

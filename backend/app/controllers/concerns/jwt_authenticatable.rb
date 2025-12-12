@@ -8,16 +8,16 @@ module JwtAuthenticatable
   private
 
   def authenticate_request
-    header = request.headers['Authorization']
-    header = header.split(' ').last if header
-    
+    header = request.headers["Authorization"]
+    header = header.split.last if header
+
     begin
       decoded = jwt_decode(header)
       @current_user = User.find(decoded[:user_id])
-    rescue JWT::DecodeError => e
-      render json: { errors: 'Invalid token' }, status: :unauthorized
-    rescue ActiveRecord::RecordNotFound => e
-      render json: { errors: 'User not found' }, status: :unauthorized
+    rescue JWT::DecodeError
+      render json: { errors: "Invalid token" }, status: :unauthorized
+    rescue ActiveRecord::RecordNotFound
+      render json: { errors: "User not found" }, status: :unauthorized
     end
   end
 
@@ -32,10 +32,10 @@ module JwtAuthenticatable
 
   def jwt_decode(token)
     decoded = JWT.decode(token, jwt_secret)[0]
-    HashWithIndifferentAccess.new(decoded)
+    ActiveSupport::HashWithIndifferentAccess.new(decoded)
   end
 
   def jwt_secret
-    Rails.application.credentials.secret_key_base || 'fallback_secret_key_for_development'
+    Rails.application.credentials.secret_key_base || "fallback_secret_key_for_development"
   end
 end
