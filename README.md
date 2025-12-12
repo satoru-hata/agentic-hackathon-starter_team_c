@@ -14,25 +14,29 @@
 ## 必要な環境
 
 - Docker
-- Ruby 3.0.6 以上
-- Node.js 16 以上
-- PostgreSQL（Docker経由で提供）
+- Docker Compose
 
 ## セットアップ
 
-### 方法1: Docker Compose（推奨）
+### Docker Compose（推奨）
+
+すべてのサービスをコンテナで起動します：
 
 ```bash
-# サービスの起動
+# すべてのサービスの起動（データベース、バックエンド、フロントエンド）
 docker-compose up -d
 
-# Reactフロントエンドの起動
-cd frontend
-npm install
-npm start
+# ログを確認
+docker-compose logs -f
+
+# 特定のサービスのログを確認
+docker-compose logs -f frontend
+docker-compose logs -f backend
 ```
 
-### 方法2: 手動セットアップ
+### 手動セットアップ
+
+個別にサービスを起動する場合：
 
 #### 1. PostgreSQLデータベースの起動
 
@@ -55,6 +59,8 @@ rails server
 #### 3. React フロントエンドの起動
 
 ```bash
+docker-compose up -d frontend
+# または
 cd frontend
 npm install
 npm start
@@ -94,16 +100,13 @@ npm start
 ### ポートが既に使用中の場合
 
 ```bash
-# Rails API (ポート3000)
-lsof -i :3000
-kill -9 [PID]
-
-# React (ポート3001)
-lsof -i :3001
-kill -9 [PID]
-
-# PostgreSQL (ポート5432)
+# すべてのコンテナを停止
 docker-compose down
+
+# 特定のポートを使用しているプロセスを確認
+lsof -i :3000  # Rails API
+lsof -i :3001  # React Frontend
+lsof -i :5432  # PostgreSQL
 ```
 
 ### データベース接続エラー
@@ -111,14 +114,22 @@ docker-compose down
 ```bash
 docker-compose down
 docker-compose up -d db
-```
-
-### OpenSSL エラー（Ruby）
-
-Dockerコンテナを使用してください：
-```bash
+# 少し待ってからバックエンドを起動
 docker-compose up -d backend
 ```
+
+### コンテナの再ビルドが必要な場合
+
+依存関係を変更した場合は、コンテナを再ビルドしてください：
+```bash
+docker-compose down
+docker-compose build
+docker-compose up -d
+```
+
+### フロントエンドのホットリロードが動作しない場合
+
+環境変数 `CHOKIDAR_USEPOLLING=true` が設定されているか確認してください（docker-compose.ymlに設定済み）。
 
 ## 開発環境（オリジナル）
 
