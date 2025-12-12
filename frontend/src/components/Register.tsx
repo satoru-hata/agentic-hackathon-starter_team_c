@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API_ENDPOINTS } from '../config/api';
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -16,7 +15,8 @@ const Register: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch(API_ENDPOINTS.register, {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+      const response = await fetch(`${apiUrl}/api/v1/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
