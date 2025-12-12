@@ -14,6 +14,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_12_061002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "user_profiles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.string "department", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_profiles_on_user_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
     t.string "password_digest", null: false
@@ -22,26 +31,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_12_061002) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  create_table "employee_profiles", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "name", null: false
-    t.string "department", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_employee_profiles_on_user_id", unique: true
-  end
-
   create_table "work_locations", force: :cascade do |t|
-    t.bigint "employee_profile_id", null: false
+    t.bigint "user_profile_id", null: false
     t.string "status", null: false
     t.date "date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["employee_profile_id", "date"], name: "index_work_locations_on_employee_profile_id_and_date", unique: true
-    t.index ["employee_profile_id"], name: "index_work_locations_on_employee_profile_id"
     t.index ["date"], name: "index_work_locations_on_date"
+    t.index ["user_profile_id", "date"], name: "index_work_locations_on_user_profile_id_and_date", unique: true
+    t.index ["user_profile_id"], name: "index_work_locations_on_user_profile_id"
   end
 
-  add_foreign_key "employee_profiles", "users"
-  add_foreign_key "work_locations", "employee_profiles"
+  add_foreign_key "user_profiles", "users"
+  add_foreign_key "work_locations", "user_profiles"
 end

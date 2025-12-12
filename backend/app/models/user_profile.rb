@@ -1,4 +1,4 @@
-class EmployeeProfile < ApplicationRecord
+class UserProfile < ApplicationRecord
   belongs_to :user
   has_many :work_locations, dependent: :destroy
 

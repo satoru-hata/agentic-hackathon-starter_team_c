@@ -10,14 +10,14 @@ The following migrations have been created based on spec.md:
    - id, username, password_digest, timestamps
    - Unique index on username
 
-2. **20251212061001_create_employee_profiles.rb** - Employee profiles table
+2. **20251212061001_create_user_profiles.rb** - User profiles table
    - id, user_id (foreign key), name, department, timestamps
    - Unique index on user_id
 
 3. **20251212061002_create_work_locations.rb** - Work locations table
-   - id, employee_profile_id (foreign key), status, date, timestamps
+   - id, user_profile_id (foreign key), status, date, timestamps
    - Index on date
-   - Unique composite index on (employee_profile_id, date)
+   - Unique composite index on (user_profile_id, date)
 
 ## Running Migrations
 
@@ -34,11 +34,6 @@ docker compose exec -T db psql -U user -d mydb < backend/db/create_tables.sql
 ```bash
 # Using Docker Compose
 docker compose exec backend rails db:migrate
-
-# Or locally (if Rails is installed)
-cd backend
-bundle install
-rails db:migrate
 ```
 
 ## Current Status
@@ -47,7 +42,7 @@ rails db:migrate
 
 The following tables have been created in the PostgreSQL database:
 - `users` - ✅ Created with all indexes
-- `employee_profiles` - ✅ Created with all indexes and foreign keys
+- `user_profiles` - ✅ Created with all indexes and foreign keys
 - `work_locations` - ✅ Created with all indexes and foreign keys
 - `schema_migrations` - ✅ Created with migration versions
 - `ar_internal_metadata` - ✅ Created for Rails metadata
@@ -57,7 +52,7 @@ The following tables have been created in the PostgreSQL database:
 After running migrations, the schema will include:
 
 - **users**: User authentication
-- **employee_profiles**: Employee profile information
+- **user_profiles**: User profile information
 - **work_locations**: Daily work location status (office/remote/out_of_office)
 
 ## Notes
