@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface ApiResponse {
   message: string;
@@ -7,6 +7,7 @@ interface ApiResponse {
 }
 
 const Welcome: React.FC = () => {
+  const navigate = useNavigate();
   const [apiData, setApiData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -67,12 +68,12 @@ const Welcome: React.FC = () => {
         )}
 
         <div className="mt-6 text-center space-y-3">
-          <Link 
-            to="/status"
-            className="block bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded transition duration-200"
+          <button 
+            onClick={() => navigate('/status')}
+            className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-3 px-4 rounded transition duration-200"
           >
             本日の勤務状況を見る
-          </Link>
+          </button>
           <button 
             onClick={() => window.location.reload()}
             className="block w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200"
