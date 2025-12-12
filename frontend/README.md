@@ -1,15 +1,53 @@
-# Getting Started with Create React App
+# Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React フロントエンドアプリケーション（TypeScript + Tailwind CSS）
+
+## Docker での起動（推奨）
+
+プロジェクトルートから以下のコマンドを実行：
+
+```bash
+# フロントエンドをコンテナで起動
+docker compose up -d frontend
+
+# ログを確認
+docker compose logs -f frontend
+
+# コンテナを停止
+docker compose down
+```
+
+フロントエンドは http://localhost:3001 でアクセスできます。
+
+## ローカルでの起動
+
+### 必要な環境
+- Node.js 16 以上
+
+### セットアップと起動
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+アプリは http://localhost:3001 で起動します（`PORT=3001` が設定されています）。
+
+## Setup
+
+First, install the dependencies:
+
+```bash
+npm install
+```
 
 ## Available Scripts
-
-In the project directory, you can run:
 
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
