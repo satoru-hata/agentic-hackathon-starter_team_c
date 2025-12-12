@@ -2,11 +2,11 @@
 
 echo "Starting development environment..."
 
-# Build and start Rails backend with Docker
-echo "Building and starting Rails API backend with PostgreSQL..."
+# Build and start all services with Docker
+echo "Building and starting Rails API backend, PostgreSQL, and React frontend..."
 docker-compose down
-docker-compose build backend
-docker-compose up -d db backend
+docker-compose build backend frontend
+docker-compose up -d
 
 # Wait for services to be ready
 echo "Waiting for services to be ready..."
@@ -16,12 +16,6 @@ sleep 10
 echo "Setting up database..."
 docker-compose exec backend rails db:create 2>/dev/null || true
 docker-compose exec backend rails db:migrate
-
-# Start React frontend
-echo "Starting React frontend on port 3001..."
-cd frontend
-npm install
-npm start &
 
 echo ""
 echo "================================"
